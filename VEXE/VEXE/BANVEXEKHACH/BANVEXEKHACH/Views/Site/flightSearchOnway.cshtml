@@ -1,0 +1,146 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<VEXE.Models.ticket>
+@{
+    ViewBag.Title = "Tìm kiếm vé xe";
+    Layout = "~/Views/Shared/_layOutSite.cshtml";
+}
+
+<section class="flight-destinations">
+    <div class="container bg-white">
+        <div class="row">
+            <form action="~/Checkout/Index" method="post">
+                <input type="hidden" name="songuoi" value="@ViewBag.songuoi" />
+                <div class="col-md-12 col-sm-12" style="padding-top:80px;">
+                    <div class="flight-head">
+                        <div class="">
+                            <nav aria-label="breadcrumb">
+                                <span style="font-weight:bold; font-size:26px;"> Phương Trang | Vé Xe Từ: </span>
+                                <span style="font-weight:bold; color:#ff6a00; font-size:26px;"> @ViewBag.noidi </span>
+                                - Tới -<span style="font-weight:bold; color:#ff6a00; font-size:26px;"> @ViewBag.noiVe </span><br />
+
+                                <span style="font-weight:bold; font-size:26px;"><i class="fas fa-calendar-day"></i> Ngày xuất phát:  </span>
+
+                                <span style="font-weight:bold; color:#ff0000; font-size:26px;"> @ViewBag.ngaydi </span>
+                            </nav>
+                        </div>
+
+                        <div class="filter-bar">
+                            <label for="departureTimeFilter" style="font-size: 26px">Giờ Khởi Hành: </label>
+                            <select id="departureTimeFilter" class="form-control" style="width: 200px; display: inline-block;">
+                                <option value="">Tất cả</option>
+                                @foreach (var time in Model.Select(x => x.departure_time).Distinct())
+                                {
+                                    <option value="@time">@time</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="flight-table">
+                        <table id="ticketTable">
+                            <thead>
+                                <tr>
+                                    <th style="text-align:center">Điểm xuất phát</th>
+                                    <th style="text-align:center">Điểm đến</th>
+                                    <th style="text-align:center">Ngày xuất phát</th>
+                                    <th style="text-align:center">Thời gian khởi hành</th>
+                                    <th style="text-align:center">Thời gian đến</th>
+                                    <th style="text-align:center">Thời gian dự kiến</th>
+                                    <th style="text-align:center">Số vé</th>
+                                    <th style="text-align:center">Giá vé</th>
+                                    <th style="text-align:center">Chi tiết</th>
+                                    <th style="text-align:center">Đặt vé</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    var estimatedDuration = item.arrival_time.HasValue && item.departure_time.HasValue ? (item.arrival_time.Value - item.departure_time.Value).ToString(@"hh\:mm"): "N/A";
+                                    <tr class="ticket-row" data-departure-time="@item.departure_time">
+                                        <td style="text-align:center">
+                                            <h5>@item.city.cityName</h5>
+                                            <p>(@item.city.cityName)</p>
+                                        </td>
+                                        <td style="text-align:center">
+                                            <h5>@item.city1.cityName</h5>
+                                            <P>(@item.city1.cityName)</P>
+                                        </td>
+                                        <td style="text-align:center">
+                                            <h5>@item.departure_date.Value.ToString("dd-MM-yyyy")</h5>
+                                        </td>
+                                        <td style="text-align:center">
+                                            <h5>@item.departure_time</h5>
+                                        </td>
+                                        <td style="text-align:center">
+                                            <h5>@item.arrival_time</h5>
+                                        </td>
+                                        <td style="text-align:center">
+                                            <h5>@estimatedDuration</h5>
+                                        </td>
+                                        <td style="text-align:center">
+                                            <h5>Tổng: @item.guestTotal (Đã bán: @item.Sold/@item.guestTotal)</h5>
+                                        </td>
+                                        <td style="text-align:center">
+                                            <h5><strong class="color-red-3">@item.price.Value.ToString("N0") VND</strong></h5>
+                                            <p class="emi">(VND)</p>
+                                        </td>
+                                        <td style="text-align:center">
+                                            <a href="~/chuyen-xe/@item.id">Xem chi tiết </a>
+                                        </td>
+                                        @if (item.Sold < item.guestTotal)
+                                        {
+                                            <td style="text-align:center">
+                                                @Html.RadioButton("datve", item.id, new { name = "idTitket", required = "required" })
+                                                @Html.Label("Đặt")
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                <h5>Bán Hết</h5>
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-10" style="padding-bottom:50px;"></div>
+                        <button class="btn-blue btn-red btn-style-1" type="submit" name="tieptucdatve" style="background-color:#ff6a00">Tiếp tục</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+
+<script>
+    $("#active_@Model.PageNumber").addClass("active");
+
+    function ajaxShowItem(t) {
+        console.log(t.value)
+    }
+</script>
+
+
+
+<script>
+    document.getElementById('departureTimeFilter').addEventListener('change', function () {
+        const selectedTime = this.value;
+        const rows = document.querySelectorAll('.ticket-row');
+
+        rows.forEach(row => {
+            const rowTime = row.getAttribute('data-departure-time');
+            if (selectedTime === '' || rowTime === selectedTime) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+</script>

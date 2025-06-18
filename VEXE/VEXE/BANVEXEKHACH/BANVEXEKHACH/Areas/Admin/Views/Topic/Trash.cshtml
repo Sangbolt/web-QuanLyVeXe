@@ -1,0 +1,154 @@
+﻿@model IEnumerable<VEXE.Models.topic>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<!-- Nội dung chính -->
+
+<div class="card card-title bg-white p-1">
+    <div class="row">
+        <div class="col-md-6">
+            <h5 class="pl-2 mt-2 text-blues">Thùng Rác</h5>
+        </div>
+        <div class="col-md-6 m-0">
+            <ol class="breadcrumb bg-white float-sm-right m-0">
+                <li class="breadcrumb-item"><a href="#">Trang Chủ</a></li>
+                <li class="breadcrumb-item active">Thùng Rác</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<section class="container-fluid">
+    <div class="bg-white card p-3">
+        <div class="row justify-content-end mb-3">
+            <div class="col-md-3 text-right">
+                <a class="btn btn-sm btn-danger text-white" href="~/admin/Topic">Hủy | Quay về trang chủ đề</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-9 w-100">
+                @Html.Partial("_MessgeAlert")
+            </div>
+            <div class="col-md-12 p-3">
+                <table class="table px-3 table-striped table-bordered dt-responsive nowrap">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center">Mã chủ đề</th>
+                            <th style="text-align:center">Tên chủ đề</th>
+                            <th style="text-align:center">Link</th>
+                            <th style="text-align:center">Ngày cập nhật</th>
+                            <th style="text-align:center">Chức Năng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="text-cam" style="text-align:center">@Html.DisplayFor(modelItem => item.ID)</td>
+                                <td style="text-align:center">
+                                    <a class="font-weight-bold card-link" href="">
+                                        @Html.DisplayFor(modelItem => item.name)
+                                    </a>
+                                </td>
+                                <td style="text-align:center">@Html.DisplayFor(modelItem => item.slug)</td>
+                                <td style="font-size:14px; text-align:center">@Html.DisplayFor(modelItem => item.created_at)</td>
+                                <td style="text-align:center">
+                                    <a class="btn btn-sm btn-light text-dark border" href="@Url.Action("Retrash", "topic", new { id = item.ID })">
+                                        <i class="fas fa-undo"></i>
+                                    </a>
+                                    <a class="btn btn-sm btn-light text-danger border" href="@Url.Action("deleteTrash", "topic", new { id = item.ID })">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $("#topic").addClass("active");
+</script>
+
+<style>
+    .btn-success {
+        background-color: #28a745;
+        border: none;
+        padding: 0.5rem 1.2rem;
+        border-radius: 5px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border: none;
+        padding: 0.5rem 1.2rem;
+        border-radius: 5px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+        opacity: 0.85;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .breadcrumb a {
+        color: #FF6600;
+        text-decoration: none;
+    }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+    table {
+        font-size: 12px;
+        margin-top: 1rem;
+    }
+
+        table th {
+            background-color: #FF6600;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        table td {
+            vertical-align: middle;
+        }
+
+        table tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+
+    .card {
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #FF6600;
+    }
+
+    .fas {
+        font-size: 14px;
+    }
+
+    .text-black {
+        color: #000;
+    }
+
+    .breadcrumb {
+        margin-bottom: 0;
+    }
+</style>

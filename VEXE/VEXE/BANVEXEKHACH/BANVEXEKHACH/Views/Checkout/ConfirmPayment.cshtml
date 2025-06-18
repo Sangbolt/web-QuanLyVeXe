@@ -1,0 +1,11 @@
+﻿@{
+    ViewBag.Title = "Xác nhận thanh toán";
+}
+
+@if (ViewBag.QrCodeUrl != null)
+{
+    <h3>Quét mã QR để thanh toán:</h3>
+    <img src="@ViewBag.QrCodeUrl" alt="QR Code" style="max-width: 100%; height: auto;" />
+}
+
+<a href="@Url.Action("Index", "Home")" class="btn btn-primary">Quay về trang chủ</a>

@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "Đăng kí";
+    Layout = "~/Views/Shared/_layOutSite.cshtml";
+}
+<section class="">
+    <div>
+        <form action="" method="post">
+            <div class="container bg-light">
+                @Html.Partial("_MessgeAlert")
+                <div class="row bg-light"
+                    <div class="form-group col-md-6 col-xs-12" >
+                        <div>
+                            <label for="email">Tên Người Dùng</label>
+                            <input class="mb-0 form-control" type="text" placeholder="Nhập Tên Người Dùng" name="uname" required>
+                            <span class="text-danger">@ViewBag.error</span>
+                        </div>
+                        <div>
+                            <label for="fullname">Nhập đầy đủ họ tên</label>
+                            <input type="text" class="mb-0 form-control" placeholder="Nhập đầy đủ tên" name="fname" required>
+                        </div>
+                        <div>
+                            <label for="email">Email</label>
+                            <input class="mb-0 form-control" type="email" id="email" name="email" placeholder="Email" required>
+                        </div>
+                        <div>
+                            <label for="email">Số điện thoại</label>
+                            <input class="mb-0 form-control" type="tel" name="phone" placeholder="Số Điện Thoại"  required
+           pattern="[0-9]{3}[0-9]{3}[0-9]{4}">
+                            <span asp-validation-for="phone" class="text-danger"></span>
+                        </div>
+                        <div>
+                            <label for="email">Địa chỉ</label>
+                            <input class="mb-0 form-control" type="text" name="address" placeholder="Nhập địa chỉ" required>
+                        </div>
+                        <div>
+                            <label for="password">Mật Khẩu</label>
+                            <input class="mb-0 form-control" type="password" name="psw" id="password" placeholder="Nhập mật khẩu" required>
+                        </div>
+                        <div>
+                            <label for="password">Xác thực mật khẩu</label>
+                            <input class="mb-0 form-control" type="password" id="repeat-password" name="repsw" placeholder="Nhập lại mật khẩu" required>
+                        </div>
+
+                        <span class="text-danger">@ViewBag.error</span>
+                        <button style="margin-top:20px; background-color:#ff6a00;" class="btn-blue btn-red btn-style-1 pt-2" type="submit">Đăng Kí</button>
+                    </div>
+                    <div class="col-md-6">
+                        <div>
+                            <img style="width: 100%;height: 500px" class="d-block img-fluid imgregister" onerror="this.style.display='none'" src="https://cdn.futabus.vn/futa-busline-cms-dev/TVC_00aa29ba5b/TVC_00aa29ba5b.svg"  />
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</section>

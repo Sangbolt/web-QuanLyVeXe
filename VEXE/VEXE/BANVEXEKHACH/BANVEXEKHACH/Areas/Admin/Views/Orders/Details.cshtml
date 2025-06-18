@@ -1,0 +1,121 @@
+﻿@model VEXE.Models.order
+
+@{
+    ViewBag.Title = "Chi tiết đặt vé";
+    Layout = "~/Areas/Admin/Views/Shared/_layOutAdmin.cshtml";
+}
+
+<div class="container bg-light shadow-sm p-4 rounded">
+    <div class="row">
+        <div class="col-md-7">
+            <h2 class="text-warning font-weight-bold mb-4">Chi tiết vé đặt</h2>
+            <table class="table table-borderless">
+                <tbody>
+                    <tr>
+                        <td class="font-weight-bold text-secondary">Mã vé đặt:</td>
+                        <td class="text-warning">@Model.ID</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold text-secondary">Hành khách:</td>
+                        <td>@Model.name</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold text-secondary">Email:</td>
+                        <td>@Model.email</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold text-secondary">Số điện thoại:</td>
+                        <td>@Model.phone</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold text-secondary">Số lượng vé:</td>
+                        <td>@Model.guestTotal</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold text-secondary">Giới tính:</td>
+                        <td>@Model.gioitinh</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold text-secondary">Quốc tịch:</td>
+                        <td>@Model.quoctich</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold text-secondary">Tin nhắn:</td>
+                        <td>@Model.mess</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold text-secondary">Ngày đặt:</td>
+                        <td>@Model.created_ate.ToString("dd/MM/yyyy HH:mm")</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-md-5">
+            <h2 class="text-warning font-weight-bold mb-4">Chuyến xe đặt</h2>
+            <div class="card p-3 border-0 shadow-sm">
+                @Html.Action("_BookingConnfig", "Orders", new { orderId = Model.ID })
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        font-family: "Segoe UI", sans-serif;
+        background-color: #FF6600;
+    }
+
+    h3 {
+        font-size: 1.8rem;
+        color: #FF6600;
+    }
+
+    h4 {
+        font-size: 1.4rem;
+        color: #FF6600;
+    }
+
+    .container {
+        background-color: #FF6600;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .table-borderless td {
+        padding: 12px 20px;
+        vertical-align: middle;
+    }
+
+        .table-borderless td:first-child {
+            font-size: 14px;
+            color: #FF6600;
+            width: 35%;
+            font-weight: 600;
+        }
+
+        .table-borderless td:last-child {
+            font-size: 16px;
+            color: #333;
+            font-weight: 500;
+        }
+
+    .text-warning {
+        color: #FF8800;
+        font-weight: 700;
+    }
+
+    .card {
+        border-radius: 10px;
+        background-color: #f7f7f7;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .shadow-sm {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .font-weight-bold {
+        font-weight: 600;
+    }
+</style>

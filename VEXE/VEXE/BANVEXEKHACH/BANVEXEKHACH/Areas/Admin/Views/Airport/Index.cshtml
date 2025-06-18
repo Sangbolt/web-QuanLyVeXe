@@ -1,0 +1,161 @@
+﻿@{
+    ViewBag.Title = "Quản Lý Thành Phố";
+    Layout = "~/Areas/Admin/Views/Shared/_layOutAdmin.cshtml";
+}
+
+<div class="card card-title bg-white p-2">
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="pl-2 mt-2">Trang quản lí thành phố</h3>
+        </div>
+        <div class="col-md-6 m-0">
+            <ol class="breadcrumb bg-white float-sm-right m-0">
+                <li class="breadcrumb-item"><a href="~/Admin">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a href="~/admin/Airport">Trang quản lí thành phố</a></li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<section class="mt-4">
+    <div class="card bg-white shadow-sm rounded p-4">
+        <div class="d-flex justify-content-end mb-3">
+            <a class="btn btn-orange-light text-white me-2" href="~/admin/Airport/CreateCities">
+                <i class="fas fa-ticket-alt me-1" name="btnAddCity" ></i> Thêm thành phố mới
+            </a>
+            <a class="btn btn-orange-danger text-white" href="~/admin/Airport/trash">
+                <i class="fas fa-history me-1"></i> Lịch sử xóa
+            </a>
+        </div>
+
+        @Html.Partial("_MessgeAlert")
+
+        <table id="myTable1" class="table table-hover table-bordered table-striped">
+            <thead class="bg-orange-light text-white">
+                <tr>
+                    <th style="text-align:center">Mã thành phố</th>
+                    <th style="text-align:center">Thành phố</th>
+                    <th style="text-align:center">Chức năng</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.cities)
+                {
+                    <tr>
+                        <td class="text-orange" style="text-align:center">@item.cityId</td>
+                        <td style="text-align:center">@item.cityName</td>
+                        <td style="text-align:center">
+                            @if (item.status == 1)
+                            {
+                                <a class="btn btn-sm btn-orange-light me-1" href="@Url.Action("Status", "Airport", new { id = item.cityId })">
+                                    <i class="fas fa-toggle-on"></i>
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-sm btn-gray me-1" href="@Url.Action("Status", "Airport", new { id = item.cityId })">
+                                    <i class="fas fa-toggle-off"></i>
+                                </a>
+                            }
+                            <a class="btn btn-sm btn-orange-danger text-white" href="@Url.Action("Deltrash", "Airport", new { id = item.cityId })">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<style>
+    .btn-orange {
+        background-color: #FF6600;
+        border: none;
+        padding: 0.5rem 1.2rem;
+        border-radius: 5px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-orange-light {
+        background-color: #FFA366;
+        border: none;
+        padding: 0.5rem 1.2rem;
+        border-radius: 5px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-orange-danger {
+        background-color: #FF3300;
+        border: none;
+        padding: 0.5rem 1.2rem;
+        border-radius: 5px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-gray {
+        background-color: #cccccc;
+        border: none;
+        color: #555;
+        padding: 0.5rem 1.2rem;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+
+    /* Hiệu ứng hover cho các nút */
+    .btn:hover {
+        opacity: 0.85;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .breadcrumb a {
+        color: #FF6600;
+        text-decoration: none;
+    }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+    /* Cải thiện bảng */
+    table {
+        font-size: 14px;
+        margin-top: 1rem;
+    }
+
+        table th {
+            background-color: #FF6600;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        table td {
+            vertical-align: middle;
+        }
+
+        table tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+
+    /* Tùy chỉnh card */
+    .card {
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Tùy chỉnh phần tiêu đề */
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #FF6600;
+    }
+
+    /* Tùy chỉnh phần icon */
+    .fas {
+        font-size: 16px;
+    }
+</style>

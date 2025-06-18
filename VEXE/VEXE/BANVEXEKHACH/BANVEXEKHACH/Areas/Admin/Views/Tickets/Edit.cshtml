@@ -1,0 +1,247 @@
+﻿@model VEXE.Models.ticket
+
+@{
+    ViewBag.Title = "Cập nhật vé";
+    Layout = "~/Areas/Admin/Views/Shared/_layOutAdmin.cshtml";
+}
+
+<div class="card card-title bg-white p-2">
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="pl-2 mt-2">Chỉnh sửa vé xe</h3>
+        </div>
+        <div class="col-md-6 m-0">
+            <ol class="breadcrumb bg-white float-sm-right m-0">
+                <li class="breadcrumb-item"><a href="/Admin">Trang chủ</a></li>
+                <li class="breadcrumb-item">Chỉnh sửa vé xe</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<section class="card card-title bg-white p-1">
+    @Html.Partial("_MessgeAlert")
+    <div class="container bg-white pt-4" style="margin-bottom:30px">
+
+        @using (Html.BeginForm("Edit", "Tickets", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row mb-4">
+                <div class="col-md-4"></div>
+                <div class="col-md-4 text-center">
+                    <h2 class="font-weight-bold text-success">Admin | Chỉnh sửa vé</h2>
+                </div>
+                <div class="col-md-4 text-right">
+                    <button class="btn btn-sm bg-success text-white"><i class="far fa-save"></i> Lưu</button>
+                    <a href="~/admin/Tickets" class="btn btn-sm bg-danger text-white"><i class="far fa-window-close"></i> Hủy</a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label for="name" class="font-weight-bold">Tiêu đề vé</label>
+                        <input type="text" name="name" class="form-control" value="@Model.name" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="description" class="font-weight-bold">Mô tả vé</label>
+                        <input type="text" name="description" class="form-control" value="@Model.description" required />
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="fromAirport" class="font-weight-bold">Điểm đi</label>
+                        <select name="fromAirport" class="form-control">
+                            @foreach (var item in ViewBag.cities)
+                            {
+                                <option value="@Model.city.cityId">@Model.city.cityName</option>
+                                <option value="@item.cityId">@item.cityName</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="toAirport" class="font-weight-bold">Điểm đến</label>
+                        <select name="toAirport" class="form-control">
+                            @foreach (var item in ViewBag.cities)
+                            {
+                                <option value="@Model.city1.cityId">@Model.city1.cityName</option>
+                                <option value="@item.cityId">@item.cityName</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="flightCode" class="font-weight-bold">Mã chuyến xe</label>
+                        <input type="text" name="flightCode" class="form-control" value="@Model.flightCode" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketType" class="font-weight-bold">Loại xe</label>
+                        <select name="ticketType" class="form-control">
+                            <option selected value="@Model.ticketType">@Model.ticketType</option>
+                            <option value="Limousine">Limousine</option>
+                            <option value="Ghe">Ghế</option>
+                            <option value="Giuongnam">Giường nằm</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="guestTotal" class="font-weight-bold">Số ghế</label>
+                        <input type="number" name="guestTotal" class="form-control" value="@Model.guestTotal" min="50" required />
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="departure_date" class="font-weight-bold">Ngày khởi hành</label>
+                        <input type="date" name="departure_date" class="form-control" value="@Model.departure_date.Value.ToString("yyyy-MM-dd")" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="departure_time" class="font-weight-bold">Giờ khởi hành</label>
+                        <input type="time" name="departure_time" class="form-control" value="@Model.departure_time" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="arrival_time" class="font-weight-bold">Giờ đến</label>
+                        <input type="time" name="arrival_time" class="form-control" value="@Model.arrival_time" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="airline" class="font-weight-bold">Hình ảnh (nếu có)</label>
+                        <input type="hidden" name="airline" value="@Model.airline" />
+                        <input type="file" name="airline" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="price" class="font-weight-bold">Giá vé</label>
+                        <input type="number" name="price" class="form-control" value="@Model.price" min="10000" max="2000000" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="status" class="font-weight-bold">Trạng thái</label>
+                        <select name="status" class="form-control">
+                            <option value="1">Hiển thị</option>
+                            <option value="2">Ẩn</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+<script>
+    $("#form-search").submit(function (event) {
+        $("#ngaydi").text("");
+        $("#ngayve").text("");
+        var ngaydi = $("#departure_date").val();
+        var ngayve = $("#arrival_date").val();
+        var typeticket = $("#ticketCheck").val();
+
+        if (ngaydi == "Ngày Đi") {
+            $("#ngaydi").text("Vui lòng chọn ngày đi.");
+            return false;
+        }
+        if (typeticket == 2) {
+            if (ngayve == "Ngày về") {
+                $("#ngayve").text("Vui lòng chọn ngày về.");
+                return false;
+            }
+        }
+        return true;
+    });
+
+    $(document).ready(function () {
+        $("#arrival_date").attr('disabled', true);
+        $("form input:radio").change(function () {
+            if ($(this).val() == "enable") {
+                $("#arrival_date").attr('disabled', false);
+                $("#ticketCheck").val(2);
+            } else {
+                $("#arrival_date").attr('disabled', true);
+                $("#ticketCheck").val(1);
+            }
+        });
+    });
+</script>
+
+
+<style>
+    .btn-orange {
+        background-color: #FF6600;
+        border: none;
+        padding: 0.5rem 1.2rem;
+        border-radius: 5px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-orange-light {
+        background-color: #FFA366;
+        border: none;
+        padding: 0.5rem 1.2rem;
+        border-radius: 5px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-orange-danger {
+        background-color: #FF3300;
+        border: none;
+        padding: 0.5rem 1.2rem;
+        border-radius: 5px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-gray {
+        background-color: #cccccc;
+        border: none;
+        color: #555;
+        padding: 0.5rem 1.2rem;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+        opacity: 0.85;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .breadcrumb a {
+        color: #FF6600;
+        text-decoration: none;
+    }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+    table {
+        font-size: 14px;
+        margin-top: 1rem;
+    }
+
+        table th {
+            background-color: #FF6600;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        table td {
+            vertical-align: middle;
+        }
+
+        table tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+
+    .card {
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #FF6600;
+    }
+
+    .fas {
+        font-size: 16px;
+    }
+</style>

@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "Đăng Nhập";
+    Layout = "~/Views/Shared/_layOutSite.cshtml";
+}
+
+<section class="login-block">
+    <form action="" method="post">
+        <div class="container">
+            @Html.Partial("_MessgeAlert")
+            <div class="row">
+                <div class="col-md-4 login-sec">
+                    <h2 class="text-center">Đăng nhập</h2>
+                    <form class="login-form">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1" class="text-uppercase">Tên đăng nhập</label>
+                            <input type="text" class="form-control" name="username">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1" class="text-uppercase">Mật khẩu</label>
+                            <input type="password" class="form-control" name="password">
+                        </div>
+                        <span class="text-danger">@ViewBag.error</span>
+
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input">
+                                <small>Lưu mật khẩu</small>
+                            </label>
+                            <div>
+                                <button name="login" type="submit" class="btn-blue btn-red btn-style-1 pt-2" style="background-color:#ff6a00;">Đăng Nhập</button>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+                <div class="col-md-8 banner-sec">
+                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                        </ol>
+                        <div>
+                            <div>
+                                <img class="d-block img-fluid" src="https://cdn.futabus.vn/futa-busline-cms-dev/image_f922bef1bb/image_f922bef1bb.svg" width="650" height="400">
+                                <div>
+                                    <div class="banner-text">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </form>
+</section>

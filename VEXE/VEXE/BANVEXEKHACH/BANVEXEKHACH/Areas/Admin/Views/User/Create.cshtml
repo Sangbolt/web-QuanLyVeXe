@@ -1,0 +1,131 @@
+﻿@model VEXE.Models.user
+@{
+    ViewBag.Title = "Thêm Người Dùng";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@{
+    // Dropdowns for Gender, Status, and Role
+    var status = new List<SelectListItem>
+{
+        new SelectListItem { Value = "1", Text = "Hoạt động" },
+        new SelectListItem { Value = "2", Text = "Không hoạt động" }
+    };
+
+    var gender = new List<SelectListItem>
+{
+        new SelectListItem { Value = "Nam", Text = "Nam" },
+        new SelectListItem { Value = "Nữ", Text = "Nữ" }
+    };
+
+    var listRole = new List<SelectListItem>();
+    foreach (var item in ViewBag.role)
+    {
+        listRole.Add(new SelectListItem { Value = item.parentId.ToString(), Text = item.accessName });
+    }
+}
+
+<!-- Content Wrapper -->
+<div class="container mt-4">
+    <div class="card shadow border-0">
+        <div class="card-header bg-orange text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">Thêm Người Dùng</h4>
+            <ol class="breadcrumb bg-transparent m-0 p-0">
+                <li class="breadcrumb-item"><a href="~/Admin" class="text-white">Trang Chủ</a></li>
+                <li class="breadcrumb-item active text-white">Thêm Người Dùng</li>
+            </ol>
+        </div>
+        <div class="card-body">
+            @Html.Partial("_MessgeAlert")
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    <!-- Cột Trái -->
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label>Họ và Tên</label>
+                            @Html.EditorFor(model => model.fullname, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập họ và tên" } })
+                            @Html.ValidationMessageFor(model => model.fullname, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <label>Tài Khoản</label>
+                            @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập tài khoản" } })
+                            @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control", placeholder = "example@gmail.com" } })
+                            @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <label>Số Điện Thoại</label>
+                            @Html.EditorFor(model => model.phone, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập số điện thoại" } })
+                            @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <!-- Cột Phải -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Mật Khẩu</label>
+                            <input type="password" name="password" class="form-control" placeholder="Nhập mật khẩu" />
+                        </div>
+                        <div class="form-group">
+                            <label>Nhập Lại Mật Khẩu</label>
+                            <input type="password" name="password1" class="form-control" placeholder="Nhập lại mật khẩu" />
+                        </div>
+                        <div class="form-group">
+                            <label>Giới Tính</label>
+                            @Html.DropDownListFor(model => model.gender, gender, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <label>Trạng Thái</label>
+                            @Html.DropDownListFor(model => model.status, status, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <label>Vai Trò</label>
+                            @Html.DropDownListFor(model => model.access, listRole, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <a href="~/Admin/user" class="btn btn-danger"><i class="fas fa-times"></i> Hủy</a>
+                    <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Lưu</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-orange {
+        background-color: #FF6600;
+    }
+
+    .breadcrumb a:hover {
+        text-decoration: underline;
+    }
+
+    .btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 14px;
+    }
+
+    .card {
+        border-radius: 8px;
+        margin-top: 20px;
+    }
+
+    .form-group label {
+        font-weight: 500;
+        color: #333;
+    }
+
+    .form-control {
+        border-radius: 5px;
+    }
+
+    .text-danger {
+        font-size: 13px;
+    }
+</style>
