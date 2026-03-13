@@ -1,0 +1,42 @@
+﻿<section class="container-fluid">
+    <div class="row">
+        <nav class="navbar navbar-expand-lg navbar-light py-2 w-100 border-bottom" style="background-color: #FF6600;">
+            <div class="mx-auto navbar-brand d-flex align-items-center">
+                <img src="https://futabus.vn/_next/static/media/logo_new.8a0251b8.svg" alt="FUTA Logo" style="height: 50px; margin-left: 460px">
+            </div>
+
+            <!-- Tải Ứng Dụng Dropdown -->
+            <div class="ml-auto">
+                <div class="dropdown d-inline-block">
+                    <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" style="font-size: 14px;">
+                        <i class="fas fa-mobile-alt"></i> Tải Ứng Dụng
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item d-flex align-items-center" href="https://play.google.com/store/apps/details?id=client.facecar.com&pli=1" target="_blank">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play" style="width: 100px;" class="mr-2">
+                            Google Play
+                        </a>
+                        <a class="dropdown-item d-flex align-items-center" href="https://apps.apple.com/vn/app/futa/id1126633800" target="_blank">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/6/67/App_Store_%28iOS%29.svg" alt="App Store" style="width: 100px;" class="mr-2">
+                            App Store
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Tài Khoản Dropdown -->
+                <ul class="navbar-nav d-inline-block ml-3">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" name="taikhoanDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-user-circle fa-lg"></i> Tài Khoản
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item text-danger" href="~/Admin/auth/Logout" name="btnLogout" id="btnLogout">
+                                <i class="fas fa-sign-out-alt"></i> Đăng Xuất
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</section>

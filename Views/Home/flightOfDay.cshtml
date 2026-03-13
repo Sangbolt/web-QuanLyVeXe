@@ -1,0 +1,68 @@
+﻿
+@model IEnumerable<VEXE.Models.ticket>
+@{
+    ViewBag.Title = "Tìm kiếm vé xe";
+    Layout = "~/Views/Shared/_layOutSite.cshtml";
+}
+<section class="flight-destinations">
+    <div class="container-fluid bg-white">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="flight-head">
+                    <div class="custom-breadcrumb">
+                        <nav aria-label="breadcrumb">
+                            @{var Date = ViewBag.dateNow; }
+                            <span style="
+                                    font-weight: bold;
+                                    font-size: 24px;
+                                    color: #ff7300;
+                                    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+                                    font-family: Arial, sans-serif;
+                                    background: linear-gradient(to right, #ffa726, #ff7043);
+                                    -webkit-background-clip: text;
+                                    -webkit-text-fill-color: transparent;">
+                                Vé xe hôm nay: @Date.ToString("dd/MM/yyyy")
+                            </span>
+                        </nav>
+                    </div>
+
+                </div>
+               
+                <div class="flight-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="text-align:center">Điểm xuất phát</th>
+                                <th style="text-align:center">Điểm đến</th>
+                                <th style="text-align:center">Xem chi tiết</th>                  
+                                <th style="text-align:center">Giá</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td style="text-align:center">
+                                        <h6>@item.city.cityName</h6>
+                                        <p>Điểm xuất phát (@item.city.cityName)</p>
+                                    </td>
+                                    <td style="text-align:center">
+                                        <h6>@item.city1.cityName</h6>
+                                        <P>Điểm đến (@item.city1.cityName)</P>
+                                    </td>
+                                    <td style="text-align:center">
+                                        <a href="~/chuyen-xe/@item.id">Xem chi tiết </a>
+                                    </td> 
+                                    <td style="text-align:center">
+                                        <h6><strong class="color-red-3">@item.price.Value.ToString("N0") VND</strong></h6>
+                                        <p class="emi">(VND)</p>
+                                    </td>       
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

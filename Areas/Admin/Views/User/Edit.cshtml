@@ -1,0 +1,148 @@
+﻿@model VEXE.Models.user
+@{
+    ViewBag.Title = "Cập nhật";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@{
+    List<SelectListItem> status = new List<SelectListItem>();
+
+    SelectListItem statusitem1 = new SelectListItem() { Value = "1", Text = "Hoạt động" };
+    SelectListItem statusitem2 = new SelectListItem() { Value = "2", Text = "Không hoạt động" };
+    status.Add(statusitem1);
+    status.Add(statusitem2);
+
+    List<SelectListItem> gender = new List<SelectListItem>();
+
+    SelectListItem gendertitem1 = new SelectListItem() { Value = "Nam", Text = "Nam" };
+    SelectListItem gendertitem2 = new SelectListItem() { Value = "Nữ", Text = "Nữ" };
+    gender.Add(gendertitem1);
+    gender.Add(gendertitem2);
+
+    List<SelectListItem> listRole = new List<SelectListItem>();
+    SelectListItem roleItem;
+    foreach (var item in ViewBag.role)
+    {
+        roleItem = new SelectListItem() { Value = item.parentId + "", Text = item.accessName + "" };
+        listRole.Add(roleItem);
+    }
+}
+
+<div class="card card-title bg-white p-2">
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="pl-2 mt-2">Trang chỉnh sửa tài khoản</h3>
+        </div>
+        <div class="col-md-6 m-0">
+            <ol class="breadcrumb bg-white float-sm-right m-0">
+                <li class="breadcrumb-item"><a href="~/Admin">Trang chủ</a></li>
+                <li class="breadcrumb-item">Trang chỉnh sửa tài khoản</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<section class="pt-3 container card">
+    @Html.Partial("_MessgeAlert")
+    <div class="card-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.ID)
+            @Html.HiddenFor(model => model.created_at)
+            @Html.HiddenFor(model => model.address)
+            @Html.HiddenFor(model => model.created_by)
+            @Html.HiddenFor(model => model.img)
+            @Html.HiddenFor(model => model.password)
+
+            <div class="row">
+                <div class="col-md-8">
+                    <h3 class="text-center font-weight-bold text-orange mb-4">Chỉnh sửa thông tin</h3>
+                    <div class="form-group">
+                        <label for="fullname" class="font-weight-bold">Tên đầy đủ</label>
+                        @Html.EditorFor(model => model.fullname, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.fullname, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label for="username" class="font-weight-bold">Tài khoản</label>
+                        @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
+                        <span class="text-warning">@ViewBag.error1</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="font-weight-bold">Email</label>
+                        @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label for="phone" class="font-weight-bold">Số điện thoại</label>
+                        @Html.EditorFor(model => model.phone, new { htmlAttributes = new { type = "number", @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="gender" class="font-weight-bold">Giới tính</label>
+                        @Html.DropDownListFor(model => model.gender, gender, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.gender, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label for="status" class="font-weight-bold">Trạng thái</label>
+                        @Html.DropDownListFor(model => model.status, status, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.status, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label for="access" class="font-weight-bold">Phân quyền</label>
+                        @Html.DropDownListFor(model => model.access, listRole, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.access, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-12 text-right">
+                    <button class="btn btn-orange btn-sm"><i class="far fa-save"></i> Lưu</button>
+                    <a href="~/Admin/User" class="btn btn-danger btn-sm"><i class="far fa-window-close"></i> Hủy</a>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+<script>
+    $("#user").addClass("active");
+</script>
+
+<style>
+    .btn-orange {
+        background-color: #FF6600;
+        color: #fff;
+        border: none;
+        padding: 0.5rem 1.2rem;
+        border-radius: 5px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+        opacity: 0.85;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .breadcrumb a {
+        color: #FF6600;
+        text-decoration: none;
+    }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+    .card {
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .text-orange {
+        color: #FF6600;
+    }
+</style>

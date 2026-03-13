@@ -1,0 +1,152 @@
+﻿@model IEnumerable<VEXE.Models.city>
+
+@{
+    ViewBag.Title = "Thùng rác lịch trình";
+    Layout = "~/Areas/Admin/Views/Shared/_layOutAdmin.cshtml";
+}
+
+<div class="card card-title bg-light p-3 mb-4">
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="pl-2 mt-2 text-orange">Thùng rác</h3>
+        </div>
+        <div class="col-md-6 m-0">
+            <ol class="breadcrumb bg-transparent float-sm-right m-0">
+                <li class="breadcrumb-item"><a href="~/Admin" class="text-decoration-none text-orange">Trang chủ</a></li>
+                <li class="breadcrumb-item active">Thùng rác</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<section class="mb-4">
+    <div class="bg-white card p-3 shadow-sm rounded">
+        <div class="row justify-content-end mb-3">
+            <div class="col-md-3">
+                <a class="btn btn-danger btn-sm text-white" href="~/admin/Airport">Hủy | Quay về trang quản lí lịch trình</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 p-3">
+                @Html.Partial("_MessgeAlert")
+                <table id="myTable1" class="table table-striped table-bordered dt-responsive nowrap">
+                    <thead class="bg-orange-light text-white">
+                        <tr>
+                            <th style="text-align:center">Mã tuyến</th>
+                            <th style="text-align:center">Tên tuyến xe</th>
+                            <th style="text-align:center">Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="text-orange" style="text-align:center">@Html.DisplayFor(modelItem => item.cityId)</td>
+                                <td style="font-size:14px; text-align:center">@item.cityName</td>
+                                <td style="text-align:center">
+                                    <a class="btn btn-sm btn-outline-success" href="@Url.Action("Retrash", "Airport", new { id = item.cityId })">
+                                        <i class="fas fa-undo"></i>
+                                    </a>
+                                    <a class="btn btn-sm btn-outline-danger" href="@Url.Action("deleteTrash", "Airport", new { id = item.cityId })">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .btn-orange {
+        background-color: #FF6600;
+        border: none;
+        padding: 0.5rem 1.2rem;
+        border-radius: 5px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-orange-light {
+        background-color: #FFA366;
+        border: none;
+        padding: 0.5rem 1.2rem;
+        border-radius: 5px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-orange-danger {
+        background-color: #FF3300;
+        border: none;
+        padding: 0.5rem 1.2rem;
+        border-radius: 5px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-gray {
+        background-color: #cccccc;
+        border: none;
+        color: #555;
+        padding: 0.5rem 1.2rem;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+
+    /* Hiệu ứng hover cho các nút */
+    .btn:hover {
+        opacity: 0.85;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .breadcrumb a {
+        color: #FF6600;
+        text-decoration: none;
+    }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+    /* Cải thiện bảng */
+    table {
+        font-size: 14px;
+        margin-top: 1rem;
+    }
+
+        table th {
+            background-color: #FF6600;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        table td {
+            vertical-align: middle;
+        }
+
+        table tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+
+    /* Tùy chỉnh card */
+    .card {
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Tùy chỉnh phần tiêu đề */
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #FF6600;
+    }
+
+    /* Tùy chỉnh phần icon */
+    .fas {
+        font-size: 16px;
+    }
+</style>

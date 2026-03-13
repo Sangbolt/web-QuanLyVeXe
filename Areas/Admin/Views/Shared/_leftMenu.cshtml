@@ -1,0 +1,97 @@
+﻿<div class="col-md-2 bg-light-orange" style="height:800px;">
+    <ul class="list-unstyled ul-left-menu">
+
+        <!-- Search Box -->
+        <li class="border-bottom py-3">
+            <div class="input-group px-3">
+                <input type="text" class="form-control" id="searchBox" name="searchBox" placeholder="Tìm kiếm...">
+                <div class="input-group-append">
+                    <button class="btn btn-orange" type="button"><i class="fas fa-search text-white"></i></button>
+                </div>
+            </div>
+        </li>
+
+        <!-- Menu Items -->
+        <li class="py-3 border-bottom">
+            <a href="~/Admin/Orders" class="d-flex align-items-center px-3 text-orange" name="quanlyvexe">
+                <i class="fas fa-shopping-basket me-2"></i> Quản lý vé xe đã đặt
+            </a>
+        </li>
+        <li class="py-3 border-bottom">
+            <a href="~/Admin/topic" class="d-flex align-items-center px-3 text-orange" name="quanlychude">
+                <i class="fas fa-id-card me-2"></i> Quản lý chủ đề
+            </a>
+        </li>
+        <li class="py-3 border-bottom">
+            <a href="~/Admin/post" class="d-flex align-items-center px-3 text-orange" name="quanlybaiviet">
+                <i class="fas fa-newspaper me-2"></i> Quản lý bài viết
+            </a>
+        </li>
+        <li class="py-3 border-bottom">
+            <a href="~/Admin/Tickets" class="d-flex align-items-center px-3 text-orange" name="quanlytuyenxe">
+                <i class="fas fa-ticket-alt me-2"></i> Quản lý lịch trình tuyến xe
+            </a>
+        </li>
+        <li class="py-3 border-bottom">
+            <a href="~/Admin/Dashboard" class="d-flex align-items-center px-3 text-orange" name="quanlydoanhthu">
+                <i class="fas fa-chart-line me-2"></i> Quản lý doanh thu
+            </a>
+        </li>
+        <li class="py-3 border-bottom">
+            <a href="~/Admin/Airport" class="d-flex align-items-center px-3 text-orange" name="quanlydiadiem">
+                <i class="fas fa-calendar-alt me-2"></i> Quản lý địa điểm thành phố
+            </a>
+        </li>
+        <li class="py-3 border-bottom">
+            <a href="~/Admin/User" class="d-flex align-items-center px-3 text-orange" name="quanlytaikhoan">
+                <i class="fas fa-user me-2"></i> Quản lý tài khoản
+            </a>
+        </li>
+        <li class="py-3 border-bottom">
+            <a href="~/Admin/Auth/EditUser" class="d-flex align-items-center px-3 text-orange" name="quanlythongtintaikhoan">
+                <i class="fas fa-user-circle me-2"></i> Thông tin tài khoản
+            </a>
+        </li>
+    </ul>
+</div>
+
+<style>
+    /* Background Color for Sidebar */
+    .bg-light-orange {
+        background-color: #FFF5E5; /* Màu cam nhạt */
+    }
+
+    /* Menu Item Styles */
+    .ul-left-menu > li > a {
+        text-decoration: none;
+        font-size: 15px;
+        font-weight: 500;
+        color: #FF6600; /* Màu cam chính */
+        transition: all 0.2s;
+    }
+
+        .ul-left-menu > li > a:hover {
+            color: #E65C00; /* Cam đậm hơn khi hover */
+        }
+
+    .ul-left-menu li {
+        margin-bottom: 5px;
+    }
+
+    /* Button Styles */
+    .btn-orange {
+        background-color: #FF6600;
+        border: none;
+        color: white;
+        transition: background-color 0.2s;
+    }
+
+        .btn-orange:hover {
+            background-color: #E65C00;
+        }
+
+    /* Icons Margin */
+    .me-2 {
+        margin-right: 8px;
+    }
+</style>

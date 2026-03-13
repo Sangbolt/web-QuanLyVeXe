@@ -1,0 +1,36 @@
+﻿@model IEnumerable<VEXE.Models.ticket>
+@{ var sum = 0;}
+@foreach (var item in Model)
+{
+    
+    <table style="margin-top:20px;">
+        <tbody>
+            <tr>
+                <td class="title">Tổng tiền phải thanh toán: </td>
+                <td class="b-id text-danger">@item.price.Value.ToString("N0") VND</td>
+            </tr>
+            <tr>
+                <td class="title">Ngày Bắt đầu</td>
+                <td>@item.departure_date</td>
+            </tr>
+            <tr>
+                <td class="title">Điểm xuất phát</td>
+                <td>@item.city.cityName</td>
+            </tr>
+            <tr>
+                <td class="title">Điểm đến</td>
+                <td>@item.city1.cityName</td>
+            </tr>
+            <tr>
+                <td class="title">Ngày Khởi Hành</td>
+                <td>@item.departure_time</td>
+            </tr>
+            <tr>
+                <td class="Thời Gian Di Chuyển">To</td>
+                <td>@item.arrival_time</td>
+            </tr>
+        </tbody>
+    </table>   
+    
+    sum += (int)item.price;
+}

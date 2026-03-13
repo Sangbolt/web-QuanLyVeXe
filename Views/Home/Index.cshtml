@@ -1,0 +1,642 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<VEXE.Models.ticket>
+@{
+    ViewBag.Title = "FUTA Bus Lines | Công ty cổ phần xe khách Phương Trang";
+    Layout = "~/Views/Shared/_layOutSiteHeader.cshtml";
+}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="~/Public/css/TrangChu.css">
+<script src="~/Public/js/TrangChu.js"></script>
+<div class="homepage-content container">
+    <section class="mt_search" style="margin-top:50px !important; ">
+
+        <div class="container card bg-white" style="padding:30px !important; ">
+            <div class="search-content-slider">
+                <div class="section-title text-center ">
+                    <h2>Tìm kiếm chuyến đi</h2>
+                    <p>Tìm chuyến đi phù hợp cho bạn</p>
+                </div>
+
+                <form action="~/Site/flightSearch" method="post" id="form-search">
+                    <div class="radio" align="center">
+                        <label><input value="disable" type="radio" id="typeticket" name="typeticket" checked> Một Chiều</label>
+                        <label><input value="enable" type="radio" id="typeticket" name="typeticket"> Khứ hồi</label>
+                    </div>
+                    <input type="hidden" id="ticketCheck" value="" />
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="table_item">
+                                <div class="form-group">
+
+                                    <select name="departure_address" class="selectpicker form-control" tabindex="1" required>
+                                        <option value="">Tất cả</option>
+                                        @foreach (var item in ViewBag.cities)
+                                        {
+                                            <option value="@item.cityName">@item.cityName</option>
+                                        }
+                                    </select>
+
+                                    <i class="flaticon-maps-and-flags"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="table_item">
+                                <div class="form-group">
+
+                                    <select name="arrival_address" class="selectpicker form-control" tabindex="1">
+                                        <option value="">Tất cả</option>
+                                        @foreach (var item in ViewBag.cities)
+                                        {
+                                            <option value="@item.cityName">@item.cityName</option>
+                                        }
+                                    </select>
+
+                                    <i class="flaticon-maps-and-flags"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6" style="display:none">
+                            <div class="row">
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="table_item">
+                                        <div class="form-group">
+                                            <select name="songuoi1" class="selectpicker form-control" tabindex="1">
+                                                <option value="1" selected>Adult(01)</option>
+                                                <option value="2">Adult(02)</option>
+                                                <option value="3">Adult(03)</option>
+                                                <option value="4">Adult(04)</option>
+                                                <option value="5">Adult(05)</option>
+                                            </select>
+                                            <i class="flaticon-box"></i>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="table_item">
+                                        <div class="form-group">
+                                            <select name="songuoi2" class="selectpicker form-control" tabindex="1">
+                                                <option value="0">Children(0)</option>
+                                                <option value="1">Children(01)</option>
+                                                <option value="2">Children(02)</option>
+
+                                            </select>
+                                            <i class="flaticon-box"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="table_item">
+                                        <div class="form-group">
+                                            <select name="songuoi3" class="selectpicker form-control" tabindex="1">
+                                                <option value="0">Senior citizens(0)</option>
+                                                <option value="1">Senior citizens(01)</option>
+                                                <option value="2">Senior citizens(02)</option>
+                                                <option value="3">Senior citizens(03)</option>
+                                            </select>
+                                            <i class="flaticon-box"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="table_item">
+
+                                <div class="form-group ">
+                                    <div class='input-group date' id='datetimepicker1'>
+                                        <input type="text" id="departure_date" name="departure_date" class="form-control" placeholder="Ngày Đi" onclick="return 0" required />
+                                        <i class="flaticon-calendar"></i>
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                                        </span>
+                                    </div>
+                                    @Html.Partial("_MessgeAlert")
+                                    <span class="text-danger" id="ngaydi"></span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="table_item">
+                                <div class="form-group">
+                                    <div class='input-group date' id='datetimepicker2'>
+                                        <input type='text' id="arrival_date" name="arrival_date" class="form-control" placeholder="Ngày Về" required />
+                                        <i class="flaticon-calendar"></i>
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                                        </span>
+                                    </div>
+                                    <span class="text-danger" id="ngayve"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12  ">
+                        <div class="table_item " align="center">
+                            <div class="search ">
+                                <button type="submit" name="searchTrip" class="btn-blue btn-red ">Tìm kiếm chuyến xe</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="flight-destinations">
+        <div class="container bg-white">
+            <div class="row">
+                <form action="~/Checkout/Index" method="post">
+                    <input type="hidden" name="songuoi" value="@ViewBag.songuoi" />
+                    <div class="col-md-12">
+                        <div class="flight-head">
+                            <div class="">
+                                <div class="col-md-10">
+                                    <nav aria-label="breadcrumb">
+                                        @{var Date = ViewBag.dateNow; }
+                                        <span style="font-weight:bold; font-size:22px;color:#ff6a00;"><i class="fa-solid fa-train-subway"></i> Chuyến Đi Hôm Nay: @Date.ToString("dd-MM-yyyy") </span>
+                                    </nav>
+                                </div>
+                                <div class="col-md-2"> <a href="~/chuyen-xe-trong-ngay" class="btn-blue btn-red btn-style-1 w-100">Xem tất cả</a></div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="flight-table">
+                        <table style="font-size: 15px;">
+                            <thead>
+                                <tr>
+                                    <th style="text-align:center">Điểm xuất phát</th>
+                                    <th style="text-align:center">Điểm đến</th>
+                                    <th style="text-align:center">Giờ khởi hành</th>
+                                    <th style="text-align:center">Giờ đến (Dự Kiến)</th>
+                                    <th style="text-align:center">Số ghế</th>
+                                    <th style="text-align:center">Chi tiết</th>
+                                    <th style="text-align:center">Giá vé</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in ViewBag.tickets)
+                                {
+                                    <tr>
+                                        <td style="text-align:center">
+                                            <h5>@item.city.cityName</h5>
+                                            <p>Điểm đi(@item.city.cityName)</p>
+                                        </td>
+                                        <td style="text-align:center">
+                                            <h5>@item.city1.cityName</h5>
+                                            <P>Điểm đến (@item.city1.cityName)</P>
+                                        </td>
+                                        <td style="text-align:center">
+                                            <h5>@item.departure_time</h5>
+                                        </td>
+                                        <td style="text-align:center">
+                                            <h5>@item.arrival_time</h5>
+                                        </td>
+                                        <td style="text-align:center">
+                                            <h5>@item.guestTotal (Bán: @item.Sold/@item.guestTotal)</h5>
+                                        </td>
+                                        <td style="text-align:center">
+                                            <a href="~/chuyen-xe/@item.id">Xem chi tiết </a>
+                                        </td>
+                                        <td style="text-align:center">
+                                            <h5><strong class="color-red-3">@item.price.ToString("N0") VND</strong></h5>
+                                            <p class="emi">(VND)</p>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <h2 class="text-center my-4 section-title" style="font-size: 28px; color: green;">KHUYẾN MÃI NỔI BẬT</h2>
+
+    <div id="carouselExampleIndicators" class="carousel slide">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="d-flex justify-content-between">
+                    <div class="carousel-image">
+                        <img src="https://cdn.futabus.vn/futa-busline-web-cms-prod/343_x_184_px_x4_4fd05509ef/343_x_184_px_x4_4fd05509ef.jpg" class="d-block w-100" alt="Promotion 1">
+                    </div>
+                    <div class="carousel-image">
+                        <img src="https://cdn.futabus.vn/futa-busline-web-cms-prod/2_343_x_184_px_f365e0f9c8/2_343_x_184_px_f365e0f9c8.png" class="d-block w-100" alt="Promotion 2">
+                    </div>
+                    <div class="carousel-image">
+                        <img src="https://cdn.futabus.vn/futa-busline-web-cms-prod/343_x_184_px_0b1588190d/343_x_184_px_0b1588190d.png" class="d-block w-100" alt="Promotion 3">
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-item">
+                <div class="d-flex justify-content-between">
+                    <div class="carousel-image">
+                        <img src="https://cdn.futabus.vn/futa-busline-web-cms-prod/VNPAYFUTA_67_Resize_343_x_184_bd2e13cd77/VNPAYFUTA_67_Resize_343_x_184_bd2e13cd77.png" class="d-block w-100" alt="Promotion 4">
+                    </div>
+                    <div class="carousel-image">
+                        <img src="https://cdn.futabus.vn/futa-busline-web-cms-prod/343x184_ea6055b4a6/343x184_ea6055b4a6.png" class="d-block w-100" alt="Promotion 5">
+                    </div>
+                    <div class="carousel-image">
+                        <img src="https://cdn.futabus.vn/futa-busline-cms-dev/343x184_4x_29d182ce55/343x184_4x_29d182ce55.png" class="d-block w-100" alt="Promotion 6">
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-item">
+                <div class="d-flex justify-content-between">
+                    <div class="carousel-image">
+                        <img src="https://cdn.futabus.vn/futa-busline-cms-dev/343x184_4x_29d182ce55/343x184_4x_29d182ce55.png" class="d-block w-100" alt="Promotion 7">
+                    </div>
+                    <div class="carousel-image">
+                        <img src="https://cdn.futabus.vn/futa-busline-web-cms-prod/Zalo_11b66ecb81/Zalo_11b66ecb81.png" class="d-block w-100" alt="Promotion 8">
+                    </div>
+                    <div class="carousel-image">
+                        <img src="https://cdn.futabus.vn/futa-busline-cms-dev/Banner_FUTA_Pay_2_57b0471834/Banner_FUTA_Pay_2_57b0471834.png" class="d-block w-100" alt="Promotion 9">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></li>
+            <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>
+            <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></li>
+        </ol>
+    </div>
+
+    <!-- TUYẾN PHỔ BIẾN Section -->
+    <section>
+        <h2 class="text-center my-4 section-title">TUYẾN PHỔ BIẾN</h2>
+        <div class="row">
+            <!-- Thẻ 1: TP Hồ Chí Minh -->
+            <div class="route-card">
+                <a href="~/all-chuyen-xe">
+                    <img src="https://cdn.futabus.vn/futa-busline-cms-dev/Rectangle_23_2_8bf6ed1d78/Rectangle_23_2_8bf6ed1d78.png" class="card-img-top" alt="TP Hồ Chí Minh">
+                </a>
+                <div class="card-body">
+                    <h4 class="card-title">Tuyến xe từ TP Hồ Chí Minh</h4>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <a href="/chuyen-xe/3255">
+                                <div class="route-info">
+                                    <span>Đà Lạt:</span>
+                                    <strong class="price">290.000đ</strong>
+                                </div>
+                                <span class="distance-time">305km - 8 giờ</span>
+                                <span class="date"></span>
+                            </a>
+                        </li>
+
+                        <li class="list-group-item">
+                            <a href="/chuyen-xe/3252">
+                                <div class="route-info">
+                                    <span>Cần Thơ:</span>
+                                    <strong class="price">165.000đ</strong>
+                                </div>
+                                <span class="distance-time">166km - 3 giờ 12 phút</span>
+                                <span class="date"></span>
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="~/all-chuyen-xe">
+                                <div class="route-info">
+                                    <span>Long Xuyên:</span>
+                                    <strong class="price">190.000đ</strong>
+                                </div>
+                                <span class="distance-time">203km - 5 giờ</span>
+                                <span class="date"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Thẻ 2: Đà Lạt -->
+            <div class="route-card">
+                <a href="~/all-chuyen-xe">
+                    <img src="https://cdn.futabus.vn/futa-busline-cms-dev/Rectangle_23_3_2d8ce855bc/Rectangle_23_3_2d8ce855bc.png" class="card-img-top" alt="Đà Lạt">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">Tuyến xe từ Đà Lạt</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <a href="link-to-nhatrang-tuyen-xe.html">
+                                <div class="route-info">
+                                    <span>Nha Trang:</span>
+                                    <strong class="price">150.000đ</strong>
+                                </div>
+                                <span class="distance-time">135km - 3 giờ</span>
+                                <span class="date"></span>
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="~/all-chuyen-xe">
+                                <div class="route-info">
+                                    <span>Đà Nẵng:</span>
+                                    <strong class="price">350.000đ</strong>
+                                </div>
+                                <span class="distance-time">600km - 12 giờ</span>
+                                <span class="date"></span>
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="~/all-chuyen-xe">
+                                <div class="route-info">
+                                    <span>Buôn Ma Thuột:</span>
+                                    <strong class="price">180.000đ</strong>
+                                </div>
+                                <span class="distance-time">200km - 4 giờ</span>
+                                <span class="date"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Thẻ 3: Đà Nẵng -->
+            <div class="route-card">
+                <a href="~/all-chuyen-xe">
+                    <img src="https://cdn.futabus.vn/futa-busline-cms-dev/Rectangle_23_4_061f4249f6/Rectangle_23_4_061f4249f6.png" class="card-img-top" alt="Đà Nẵng">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">Tuyến xe từ Đà Nẵng</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <a href="link-to-hue-tuyen-xe.html">
+                                <div class="route-info">
+                                    <span>Huế:</span>
+                                    <strong class="price">120.000đ</strong>
+                                </div>
+                                <span class="distance-time">100km - 2 giờ</span>
+                                <span class="date"></span>
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="link-to-quangngai-tuyen-xe.html">
+                                <div class="route-info">
+                                    <span>Quảng Ngãi:</span>
+                                    <strong class="price">220.000đ</strong>
+                                </div>
+                                <span class="distance-time">140km - 3 giờ</span>
+                                <span class="date"></span>
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="link-to-hoian-tuyen-xe.html">
+                                <div class="route-info">
+                                    <span>Hội An:</span>
+                                    <strong class="price">70.000đ</strong>
+                                </div>
+                                <span class="distance-time">30km - 1 giờ</span>
+                                <span class="date"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!--FUTA BUS LINES - CHẤT LƯỢNG LÀ DANH DỰ-->
+    <div class="futa-section">
+        <h2 class="futa-title">FUTA BUS LINES - CHẤT LƯỢNG LÀ DANH DỰ</h2>
+        <p class="futa-subtitle">Được khách hàng tin tưởng và lựa chọn</p>
+
+        <div class="futa-content">
+            @*Info Item 1*@
+            <div class="futa-info-item">
+                <img src="https://cdn.futabus.vn/futa-busline-cms-dev/Group_662c4422ba/Group_662c4422ba.svg" alt="Icon - Customers">
+                <div class="info-text">
+                    <h3>Hơn 20 Triệu <span>Lượt khách</span></h3>
+                    <p>Phương Trang phục vụ hơn 20 triệu lượt khách bình quân 1 năm trên toàn quốc</p>
+                </div>
+            </div>
+            @*Info Item 2*@
+            <div class="futa-info-item">
+                <img src="https://cdn.futabus.vn/futa-busline-cms-dev/Store_55c0da8bd7/Store_55c0da8bd7.svg" alt="Icon - Offices">
+                <div class="info-text">
+                    <h3>Hơn 350 <span>Phòng vé - Bưu cục</span></h3>
+                    <p>Phương Trang có hơn 350 phòng vé, trạm trung chuyển, bến xe,... trên toàn hệ thống</p>
+                </div>
+            </div>
+            @*Info Item 3*@
+            <div class="futa-info-item">
+                <img src="https://cdn.futabus.vn/futa-busline-cms-dev/Group_2_75b5ed1dfd/Group_2_75b5ed1dfd.svg" alt="Icon - Buses">
+                <div class="info-text">
+                    <h3>Hơn 1,000 <span>Chuyến xe</span></h3>
+                    <p>Phương Trang phục vụ hơn 1,000 chuyến xe đường dài và liên tỉnh mỗi ngày</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Tin Tức Mới -->
+    <section class="news-section">
+        <h2 class="text-center my-4 section-title">TIN TỨC MỚI</h2>
+        <p class="text-center">Được khách hàng tin tưởng và lựa chọn</p>
+
+        <!-- Carousel -->
+        <div id="newsCarousel" class="carousel slide">
+            <div class="carousel-inner">
+                <!-- Slide 1 -->
+                <div class="carousel-item active">
+                    <div class="d-flex flex-nowrap justify-content-between">
+                        <!-- Card 1 -->
+                        <div class="news-card">
+                            <img src="https://cdn.futabus.vn/futa-busline-web-cms-prod/343_x_184_px_x4_4fd05509ef/343_x_184_px_x4_4fd05509ef.jpg" alt="FUTA Đồng hành cùng SHB" class="img-fluid" loading="lazy">
+                            <div class="news-content">
+                                <h5>FUTA ĐỒNG HÀNH CÙNG SHB - X3 QUÀ TẶNG</h5>
+                                <p>08/12/2023</p>
+                                <a href="#" class="btn-detail">Chi tiết</a>
+                            </div>
+                        </div>
+                        <!-- Card 2 -->
+                        <div class="news-card">
+                            <img src="https://cdn.futabus.vn/futa-busline-web-cms-prod/599_x_337_px_3_fcd93c256e/599_x_337_px_3_fcd93c256e.png" alt="Ưu đãi đồng giá hấp dẫn" class="img-fluid" loading="lazy">
+                            <div class="news-content">
+                                <h5>ƯU ĐÃI ĐỒNG GIÁ HẤP DẪN: XE MỚI</h5>
+                                <p>11/11/2024</p>
+                                <a href="#" class="btn-detail">Chi tiết</a>
+                            </div>
+                        </div>
+                        <!-- Card 3 -->
+                        <div class="news-card">
+                            <img src="https://cdn.futabus.vn/futa-busline-web-cms-prod/599x337_85122f2a61/599x337_85122f2a61.png    " alt="Phương Trang giảm giá vé" class="img-fluid" loading="lazy">
+                            <div class="news-content">
+                                <h5>PHƯƠNG TRANG - GIẢM GIÁ VÉ</h5>
+                                <p>08/11/2024</p>
+                                <a href="#" class="btn-detail">Chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 2 -->
+                <div class="carousel-item">
+                    <div class="d-flex flex-nowrap justify-content-between">
+                        <!-- Card 4 -->
+                        <div class="news-card">
+                            <img src="https://cdn.futabus.vn/futa-busline-web-cms-prod/DONG_GIA_TUYEN_HCM_KHU_VUC_TAY_NGUYEN_02_a744df78ba/DONG_GIA_TUYEN_HCM_KHU_VUC_TAY_NGUYEN_02_a744df78ba.png" alt="Đặc quyền khách hàng" class="img-fluid" loading="lazy">
+                            <div class="news-content">
+                                <h5>ĐẶC QUYỀN KHÁCH HÀNG</h5>
+                                <p>12/10/2024</p>
+                                <a href="#" class="btn-detail">Chi tiết</a>
+                            </div>
+                        </div>
+                        <!-- Card 5 -->
+                        <div class="news-card">
+                            <img src="https://cdn.futabus.vn/futa-busline-web-cms-prod/599x337_5_6fabed66ec/599x337_5_6fabed66ec.png" alt="Ưu đãi dành riêng cho bạn" class="img-fluid" loading="lazy">
+                            <div class="news-content">
+                                <h5>ƯU ĐÃI DÀNH RIÊNG CHO BẠN</h5>
+                                <p>15/12/2024</p>
+                                <a href="#" class="btn-detail">Chi tiết</a>
+                            </div>
+                        </div>
+                        <!-- Card 6 -->
+                        <div class="news-card">
+                            <img src="https://cdn.futabus.vn/futa-busline-web-cms-prod/599x337_3_501c777c98/599x337_3_501c777c98.png" alt="Tặng thẻ khuyến mãi" class="img-fluid" loading="lazy">
+                            <div class="news-content">
+                                <h5>TẶNG THẺ KHUYẾN MÃI</h5>
+                                <p>01/01/2025</p>
+                                <a href="#" class="btn-detail">Chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 3 -->
+                <div class="carousel-item">
+                    <div class="d-flex flex-nowrap justify-content-between">
+                        <!-- Card 4 -->
+                        <div class="news-card">
+                            <img src="https://cdn.futabus.vn/futa-busline-web-cms-prod/DA_DANG_MON_NGON_DU_DAY_DINH_DUONG_COMBO_CHI_39_K_02_63861d032f/DA_DANG_MON_NGON_DU_DAY_DINH_DUONG_COMBO_CHI_39_K_02_63861d032f.png" alt="Đặc quyền khách hàng" class="img-fluid" loading="lazy">
+                            <div class="news-content">
+                                <h5>ĐẶC QUYỀN KHÁCH HÀNG</h5>
+                                <p>12/10/2024</p>
+                                <a href="#" class="btn-detail">Chi tiết</a>
+                            </div>
+                        </div>
+                        <!-- Card 5 -->
+                        <div class="news-card">
+                            <img src="https://cdn.futabus.vn/futa-busline-web-cms-prod/WEB_AN_NO_UONG_NGON_CHI_CO_39_K_02_e9f07be18d/WEB_AN_NO_UONG_NGON_CHI_CO_39_K_02_e9f07be18d.png" alt="Ưu đãi dành riêng cho bạn" class="img-fluid" loading="lazy">
+                            <div class="news-content">
+                                <h5>ƯU ĐÃI DÀNH RIÊNG CHO BẠN</h5>
+                                <p>15/12/2024</p>
+                                <a href="#" class="btn-detail">Chi tiết</a>
+                            </div>
+                        </div>
+                        <!-- Card 6 -->
+                        <div class="news-card">
+                            <img src="https://cdn.futabus.vn/futa-busline-web-cms-prod/WEB_v2_DAT_MON_NGON_39_K_CHI_CO_FUTA_02_772a194ed3/WEB_v2_DAT_MON_NGON_39_K_CHI_CO_FUTA_02_772a194ed3.png" alt="Tặng thẻ khuyến mãi" class="img-fluid" loading="lazy">
+                            <div class="news-content">
+                                <h5>TẶNG THẺ KHUYẾN MÃI</h5>
+                                <p>01/01/2025</p>
+                                <a href="#" class="btn-detail">Chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 4 -->
+                <div class="carousel-item">
+                    <div class="d-flex flex-nowrap justify-content-between">
+                        <!-- Card 4 -->
+                        <div class="news-card">
+                            <img src="https://cdn.futabus.vn/futa-busline-web-cms-prod/599x_337_px_38f0c8fabc/599x_337_px_38f0c8fabc.png" alt="Đặc quyền khách hàng" class="img-fluid" loading="lazy">
+                            <div class="news-content">
+                                <h5>ĐẶC QUYỀN KHÁCH HÀNG</h5>
+                                <p>12/10/2024</p>
+                                <a href="#" class="btn-detail">Chi tiết</a>
+                            </div>
+                        </div>
+                        <!-- Card 5 -->
+                        <div class="news-card">
+                            <img src="https://cdn.futabus.vn/futa-busline-web-cms-prod/599x337_11zon_a8a24fa76b/599x337_11zon_a8a24fa76b.png" alt="Ưu đãi dành riêng cho bạn" class="img-fluid" loading="lazy">
+                            <div class="news-content">
+                                <h5>ƯU ĐÃI DÀNH RIÊNG CHO BẠN</h5>
+                                <p>15/12/2024</p>
+                                <a href="#" class="btn-detail">Chi tiết</a>
+                            </div>
+                        </div>
+                        <!-- Card 6 -->
+                        <div class="news-card">
+                            <img src="https://cdn.futabus.vn/futa-busline-web-cms-prod/599_x_337_px_1_11zon_870237b57c/599_x_337_px_1_11zon_870237b57c.png" alt="Tặng thẻ khuyến mãi" class="img-fluid" loading="lazy">
+                            <div class="news-content">
+                                <h5>TẶNG THẺ KHUYẾN MÃI</h5>
+                                <p>01/01/2025</p>
+                                <a href="#" class="btn-detail">Chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-bs-target="#newsCarousel" data-bs-slide-to="0" class="active"></li>
+                <li data-bs-target="#newsCarousel" data-bs-slide-to="1"></li>
+                <li data-bs-target="#newsCarousel" data-bs-slide-to="2"></li>
+                <li data-bs-target="#newsCarousel" data-bs-slide-to="3"></li>
+            </ol>
+        </div>
+
+        <!-- Xem tất cả -->
+        <div class="text-center my-4">
+            <a href="~/tin-tuc/tin-khuyen-mai" class="btn-view-all" name="btnXemTinTuc">Xem tất cả</a>
+        </div>
+    </section>
+
+
+
+</div>
+<script>
+    $("#form-search").submit(function (event) {
+        $("#ngaydi").text("");
+        $("#ngayve").text("");
+        var ngaydi = $("#departure_date").val();
+        var ngayve = $("#arrival_date").val();
+        var typeticket = $("#ticketCheck").val();
+
+
+        if (ngaydi == "Ngày Đi") {
+            $("#ngaydi").text("Please select your flight date");
+
+            return false;
+
+        }
+        if (typeticket == 2) {
+            if (ngayve == "Ngày về") {
+                $("#ngayve").text("Please select a return date");
+                return false
+            }
+            else {
+                return true;
+            }
+        }
+        return true;
+
+    });
+    $(document).ready(function () {
+        // By Default Disable radio button
+        $("#arrival_date").attr('disabled', true);
+        $("form input:radio").change(function () {
+            if ($(this).val() == "enable") {
+                $("#arrival_date").attr('disabled', false);
+                $("#ticketCheck").val(2);
+            }
+            else {
+                $("#arrival_date").attr('disabled', true);
+                $("#ticketCheck").val(1);
+            }
+        });
+    });
+</script>

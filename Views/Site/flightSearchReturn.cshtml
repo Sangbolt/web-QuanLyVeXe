@@ -1,0 +1,122 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<VEXE.Models.ticket>
+@{
+    ViewBag.Title = "Tìm kiếm chuyến xe";
+    Layout = "~/Views/Shared/_layOutSite.cshtml";
+}
+
+<section class="flight-destinations">
+    <div class="container bg-white">
+        <div class="row">
+
+            <form action="~/Checkout/Index" method="post">
+                <input type="hidden" name="songuoi" value="@ViewBag.songuoi" />
+                <div class="col-md-12 col-sm-12"  style="padding-top:80px;">
+                    <div class="flight-head">
+                        <div class="">
+                            <nav aria-label="breadcrumb">
+                                <span style="font-weight:bold; font-size:22px;">@*</i>*@ Phương Trang | Vé Xe </span>
+                                <span style="font-weight:bold; color:#ff6a00; font-size:22px;"> @ViewBag.noidi </span>
+                                - Tới -<span style="font-weight:bold; color:#ff6a00; font-size:22px;"> @ViewBag.noiVe </span><br />
+                                <span style="font-weight:bold; font-size:22px;"><i class="fas fa-calendar-day"></i> Ngày </span>
+                                <span style="font-weight:bold; color:#ff0000; font-size:22px;"> @ViewBag.ngaydi </span>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <div class="flight-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th style="text-align:center">Nơi Bắt Đầu</th>
+                                    <th style="text-align:center">Đến</th>
+                                    <th style="text-align:center">Giá vé</th>
+                                    <th style="text-align:center">Ghế</th>
+                                    <th style="text-align:center">Chi Tiết</th>
+                                    <th style="text-align:center">Đặt vé</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                <tr>
+                                    <td style="text-align:center">
+                                        <h5>@item.city.cityName</h5>
+                                        <p>Điểm đi (@item.city.cityName)</p>
+                                    </td>
+                                    <td style="text-align:center">
+                                        <h5>@item.city1.cityName</h5>
+                                        <P>Điểm đến (@item.city1.cityName)</P>
+                                    </td>
+                                    <td style="text-align:center">
+                                        <h5><strong class="color-red-3">@item.price.Value.ToString("N0") VND</strong></h5>
+                                        <p class="emi">(VND)</p>
+                                    </td>
+                                    <td style="text-align:center">@item.ticketType</td>
+                                    <td style="text-align:center">
+                                        <a href="~/chuyen-xe/@item.id">Xem chi tiết </a>
+                                    </td>
+                                    <td>
+                                        @Html.RadioButton("datveKH", item.id, new { name = "idTitket", required = "required" })
+                                        @Html.Label("Đặt vé")
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+    </div>
+</section>
+
+    <div class="container bg-white" style="margin-bottom:50px">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="flight-head">
+                    <div class="">
+                        <nav aria-label="breadcrumb">
+                            <span style="font-weight:bold; font-size:22px;"> Chọn điểm khứ hồi </span>
+                            <span style="font-weight:bold; color:#ff6a00; font-size:22px;"> @ViewBag.noive </span> - Tới -<span style="font-weight:bold; color:#ff6a00; font-size:22px;"> @ViewBag.noidi </span><br />
+                            <span style="font-weight:bold; font-size:22px;"><i class="fas fa-calendar-day"></i> Ngày khởi hành </span>
+                            <span style="font-weight:bold; color:#ff0000; font-size:22px;"> @ViewBag.ngayden </span>
+                        </nav>
+                    </div>
+                </div>
+                Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+                <div class="flight-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="text-align:center">Ngày Khởi Hành</th>
+                                <th style="text-align:center">Nơi Đến</th>
+                                <th style="text-align:center">Giá</th>
+                                <th style="text-align:center">Ghế</th>
+                                <th style="text-align:center">Chi Tiết</th>
+                                <th style="text-align:center">Đặt vé</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @Html.Action("return_ticket", "Site", new { date = ViewBag.date, noidi = ViewBag.noidi, noiden = ViewBag.noiVe })
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="container " >
+                    <div class="row">
+                        <div class="col-md-10" style="padding-bottom:50px;">
+                        </div>
+                        <button class="btn-blue btn-red btn-style-1 " type="submit" style="background-color:#ff6a00">Tiếp tục</button>
+                    </div>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+
+<script>
+    $("#active_@Model.PageNumber").addClass("active");
+    function ajaxShowItem(t) {
+        console.log(t.value)
+    }
+</script>
