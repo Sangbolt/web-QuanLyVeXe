@@ -1,0 +1,29 @@
+﻿@model IEnumerable<VEXE.Models.ticket>
+
+@foreach (var item in Model)
+{
+<tr>
+    <td>
+        <h6>@item.city.cityName</h6>
+        <p>(@item.city.cityName)</p>
+    </td>
+    <td>
+        <h6>@item.city1.cityName</h6>
+        <P>(@item.city1.cityName)</P>
+    </td>
+    <td>
+        <h6><strong class="color-red-3">@item.price.Value.ToString("N0") VND</strong></h6>
+        <p class="emi">(VND)</p>
+    </td>
+    <td>@item.ticketType</td>
+    <td>
+        <a href="~/chuyen-xe/@item.id">Xem chi tiết </a>
+    </td>
+    <td>
+        @Html.RadioButton("datveKH", item.id, new { name = "idTitket", required = "required" })
+        @Html.Label("Đặt vé")
+    </td>
+</tr>
+}
+
+

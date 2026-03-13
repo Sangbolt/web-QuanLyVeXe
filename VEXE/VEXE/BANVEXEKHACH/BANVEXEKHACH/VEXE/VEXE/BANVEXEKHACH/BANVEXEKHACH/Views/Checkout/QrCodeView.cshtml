@@ -1,0 +1,64 @@
+﻿@{
+    Layout = "~/Views/Shared/_layOutSite.cshtml";
+}
+
+<section class="destinations">
+    <div class="container" style="padding:20px;">
+        <div class="row">
+            <nav aria-label="breadcrumb">
+                <ul class="breadcrumb bg-white">
+                    <li class="breadcrumb-item"><a href="~/">Trang Chủ</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Thanh toán qua VNPay</li>
+                </ul>
+            </nav>
+
+            <div class="col-md-8 bg-white">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="destination-outer">
+                            <h2 class="mt-5 mb-4">Thanh toán qua VNPay</h2>
+                            <p class="lead">Quét mã QR bên dưới để thanh toán:</p>
+
+                            <img src="@ViewBag.QrCodeUrl" alt="QR Code" class="img-fluid" style="max-width: 200px; height: auto;" />
+                            <p class="lead">
+                                <a href="@ViewBag.QrCodeUrl" target="_blank" class="btn btn-link">Hoặc nhấp vào đây để thanh toán</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="sidebar-sticky" class="col-md-4">
+                <aside class="detail-sidebar sidebar-wrapper">
+                    <div class="sidebar-item sidebar">
+                        <div style="text-align: center; margin-bottom: 15px;">
+                            <a href="@Url.Action("PaymentSuccess", "Checkout")" class="btn btn-success btn-lg mx-2">Thanh toán thành công</a>
+                        </div>
+                    </div>
+                    <div class="sidebar-item">
+                        <div style="text-align: center; margin-bottom: 15px;">
+                            <a href="@Url.Action("Index", "Home")" class="btn btn-primary btn-lg mx-2">Quay về trang chủ</a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+    }
+
+    .container {
+        min-height: 100%;
+    }
+
+    #sidebar-sticky {
+        position: sticky;
+        top: 20px; 
+        z-index: 1;
+    }
+</style>

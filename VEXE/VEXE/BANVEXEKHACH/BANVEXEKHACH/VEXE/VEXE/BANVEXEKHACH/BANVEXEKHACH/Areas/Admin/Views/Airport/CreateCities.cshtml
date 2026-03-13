@@ -1,0 +1,95 @@
+﻿@model VEXE.Models.city
+
+@{
+    ViewBag.Title = "Thêm Ga";
+    Layout = "~/Areas/Admin/Views/Shared/_layOutAdmin.cshtml";
+}
+
+<div class="card card-title bg-light shadow-sm rounded p-3">
+    <div class="d-flex justify-content-between align-items-center">
+        <h4 class="text-orange">Thêm Thành Phố</h4>
+        <ol class="breadcrumb bg-transparent m-0">
+            <li class="breadcrumb-item"><a href="/Admin" class="text-orange text-decoration-none">Trang Chủ</a></li>
+            <li class="breadcrumb-item active">Thêm Thành Phố</li>
+        </ol>
+    </div>
+</div>
+
+<section class="card bg-white shadow-sm rounded p-4 mt-3">
+    @Html.Partial("_MessgeAlert")
+    <div class="container bg-white">
+        @using (Html.BeginForm("CreateCities", "Airport", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row mb-4">
+                <div class="col-md-4"></div>
+                <div class="col-md-4 text-center">
+                    <h3 class="text-orange font-weight-bold">Thêm Vé</h3>
+                </div>
+                <div class="col-md-4 text-end">
+                    <button class="btn btn-sm btn-orange me-2 text-white" ><i class="far fa-save me-1" name="btnSaveCity"></i> Lưu</button>
+                    <a href="~/admin/Airport" class="btn btn-sm btn-orange-danger text-white"><i class="far fa-window-close me-1"></i> Hủy</a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <div class="mb-3">
+                        <label for="country" class="text-orange font-weight-bold">Quốc Gia</label>
+                        <select name="countryId" id="country" class="form-control">
+                            @foreach (var item in ViewBag.countries)
+                            {
+                                <option value="@item.countryId">@item.countryName</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="cityName" class="text-orange font-weight-bold">Tên Thành Phố</label>
+                        <input type="text" name="cityName" id="cityName" class="form-control" placeholder="Tên Thành Phố" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="status" class="text-orange font-weight-bold">Trạng Thái</label>
+                        <select name="status" id="status" class="form-control">
+                            <option value="1">Hiển Thị</option>
+                            <option value="2">Ẩn</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+<style>
+    .text-orange {
+        color: #FF6600;
+    }
+
+    .btn-orange {
+        background-color: #FF6600;
+        border: none;
+    }
+
+        .btn-orange:hover {
+            background-color: #E65C00;
+        }
+
+    .btn-orange-danger {
+        background-color: #FF3300;
+        border: none;
+    }
+
+        .btn-orange-danger:hover {
+            background-color: #CC2900;
+        }
+
+    .breadcrumb a {
+        text-decoration: none;
+    }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+</style>

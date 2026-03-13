@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "Check đăng nhập";
+    Layout = "~/Views/Shared/_layOutSite.cshtml";
+}
+
+<section class="login-block">
+    <form action="Login" method="post">
+        <div class="container">
+            @Html.Partial("_MessgeAlert")
+            <div class="row">
+                <div class="col-md-4 login-sec">
+                    <h2 class="text-center">Đăng Nhập</h2>
+                    <h4 style="color:darkred">Đăng Nhập Để Thực Hiện Đặt Vé Xe </h4>
+                    <form class="login-form">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1" class="text-uppercase">Tên Đăng Nhập</label>
+                            <input type="text" class="form-control" name="username">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1" class="text-uppercase">Mật Khẩu</label>
+                            <input type="password" class="form-control" name="password">
+                        </div>
+                        <span class="text-danger">@ViewBag.error</span>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input">
+                                <small>Lưu mật khẩu</small>
+                            </label>
+                            <div>
+                                <button type="submit" class="btn-blue btn-red btn-style-1 pt-2">Đăng Nhập</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-8 banner-sec">
+                        <div>
+                            <div>
+                                <img class="d-block img-fluid" src="https://cdn.futabus.vn/futa-busline-web-cms-prod/343_x_184_px_0b1588190d/343_x_184_px_0b1588190d.png" width="650" height="400">
+                                <div>
+                                    <div class="banner-text">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+    </form>
+</section>

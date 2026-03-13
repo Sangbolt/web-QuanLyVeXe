@@ -1,0 +1,28 @@
+﻿<div class="upper-head clearfix " style="background-color:#ff6a00;">
+    <div class="container ">
+        <div class="upper-head-inner">
+            <div class="contact-info pull-left">
+                <div class="contact-info-item"><i class="flaticon-phone-call"></i></div>
+                <i class="flaticon-mail"></i><p> Email: <span>nhom2_xekhachphuongtrang@gmail.com</span></p>
+            </div>
+            <div class="logo" style="text-align:center;">
+                <a href="~/"><img alt="Image" src="https://futabus.vn/_next/static/media/logo_new.8a0251b8.svg" height="50" width="120"></a>
+            </div>
+
+            <div class="login-btn pull-right">
+                @if (ViewBag.sessionFullname != null)
+                {
+                    <p> Xin Chào: @ViewBag.sessionFullname </p>
+                    <a href="~/tai-khoan"><i class="fas fa-user"></i> Tài Khoản</a>
+                    <a href="~/Customer/logout">Đăng Xuất</a>
+                }
+                else
+                {
+                    <a name="dangnhap" style="color:white" href="~/dang-nhap"><i class="fa fa-unlock-alt"></i> Đăng Nhập</a>
+                    <a name="dangky" style="color:white" href="~/dang-ky"><i class="fa fa-user-plus"></i> Đăng Ký</a>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

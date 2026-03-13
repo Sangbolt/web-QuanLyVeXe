@@ -1,0 +1,51 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\V\u00E9 Xe Ph\u01B0\u01A1ng Trang\\NHOM2_VEXEPHUONGTRANGG\\VEXE\\VEXE\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{D72F0A94-1123-4970-8BE6-94378CF67BF9}|BANVEXEKHACH\\BANVEXEKHACH\\VEXE.csproj|d:\\v\u00E9 xe ph\u01B0\u01A1ng trang\\nhom2_vexephuongtrangg\\vexe\\vexe\\banvexekhach\\banvexekhach\\areas\\admin\\views\\shared\\_mainmenu.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D72F0A94-1123-4970-8BE6-94378CF67BF9}|BANVEXEKHACH\\BANVEXEKHACH\\VEXE.csproj|solutionrelative:banvexekhach\\banvexekhach\\areas\\admin\\views\\shared\\_mainmenu.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 494,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "_mainmenu.cshtml",
+              "DocumentMoniker": "D:\\V\u00E9 Xe Ph\u01B0\u01A1ng Trang\\NHOM2_VEXEPHUONGTRANGG\\VEXE\\VEXE\\BANVEXEKHACH\\BANVEXEKHACH\\Areas\\Admin\\Views\\Shared\\_mainmenu.cshtml",
+              "RelativeDocumentMoniker": "BANVEXEKHACH\\BANVEXEKHACH\\Areas\\Admin\\Views\\Shared\\_mainmenu.cshtml",
+              "ToolTip": "D:\\V\u00E9 Xe Ph\u01B0\u01A1ng Trang\\NHOM2_VEXEPHUONGTRANGG\\VEXE\\VEXE\\BANVEXEKHACH\\BANVEXEKHACH\\Areas\\Admin\\Views\\Shared\\_mainmenu.cshtml",
+              "RelativeToolTip": "BANVEXEKHACH\\BANVEXEKHACH\\Areas\\Admin\\Views\\Shared\\_mainmenu.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-08T17:32:19.692Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
+            }
+          ]
+        },
+        {
+          "DockedHeight": 118,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

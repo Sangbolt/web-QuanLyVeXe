@@ -1,0 +1,159 @@
+﻿@model IEnumerable<VEXE.Models.ticket>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_layOutSite.cshtml";
+}
+<section class="booking">
+    <div class="container bg-white">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="booking-form booking-outer">
+                    <div class="payment-info detail" style="padding-top: 100px;">
+                        <div class="row">
+                            @if (Model.Count() > 1)
+                            {
+                                <h3 class="text-danger"> Khứ hồi </h3>
+                            }
+                            else
+                            {
+                                <h3 class="text-danger"> Một chiều </h3>
+                            }
+                            @{ var sum = 0;}
+                            @foreach (var item in Model)
+                            {
+
+                                <div class="col-md-6">
+
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td class="title">Tổng số tiền phải thanh toán: </td>
+                                                <td class="b-id text-danger">@item.price.Value.ToString("N0") VND</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="title">Ngày khởi hành</td>
+                                                <td>@item.departure_date.Value.ToString("dd/MM/yyyy")</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="title">Giờ xuất phát</td>
+                                                <td>
+                                                    <h6>@item.departure_time</h6>
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td class="title">Thời gian đến (dự kiến) </td>
+                                                <td>
+                                                    <h6>@item.arrival_time</h6>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="title">Điểm xuất phát</td>
+                                                <td>@item.city.cityName</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="title">Điểm đến</td>
+                                                <td>@item.city1.cityName</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                sum += (int)item.price;
+                            }
+                            @{ sum = sum * (int)ViewBag.songuoi;
+                            }
+                            <h3 class="text-danger">Tổng số tiền phải thanh toán: @sum.ToString("N0") VND</h3>
+                        </div>
+                    </div>
+
+                    <form action="~/Checkout/checkOut" method="post">
+                        <input type="hidden" value="@ViewBag.ve1" name="veOnvay" />
+                        <input type="hidden" value="@ViewBag.ve2" name="veReturn" />
+                        <input type="hidden" value="@sum" name="total" />
+                        <div class="row">
+
+                            <div class="form-group col-xs-6">
+                                <label>Số vé:</label>
+                                <input type="text" class="form-control" value="@ViewBag.songuoi" disabled>
+                                <input name="guestTotal" type="hidden" class="form-control" value="@ViewBag.songuoi">
+                            </div>
+
+                            <div class="form-group col-xs-12">
+                                <label>Tên hành khách:</label>
+                                <input name="name" type="text" class="form-control" id="Name" placeholder="Nhập tên của bạn" required>
+                            </div>
+
+                            <div class="form-group col-xs-6">
+                                <label>Email:</label>
+                                <input type="email" name="email" class="form-control" id="email" placeholder="abc123@gmail.com" required>
+                            </div>
+
+                            <div class="form-group col-xs-6 col-left-padding">
+                                <label>Số điện thoại:</label>
+                                <input name="phone" type="tel" required
+                                       class="form-control" id="phnumber" placeholder="0...." />
+                                <span asp-validation-for="phone" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group col-xs-6">
+                                <label>Giới tính:</label>
+                                <select required name="gioitinh">
+                                    <option value="female" selected>Nữ</option>
+                                    <option value="male">Nam</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-xs-6 col-left-padding">
+                                <label>Quốc gia:</label>
+                                <select required name="quoctich">
+                                    <option value="VN">Việt Nam</option>
+                                    <option value="K">Khác</option>
+                                </select>
+                            </div>
+
+                            <div class="textarea col-xs-12">
+                                <label>Lời nhắn:</label>
+                                <textarea name="mess" placeholder="Bạn có muốn để lại lời nhắn gì không"></textarea>
+                            </div>
+
+                            <div class="col-xs-12">
+                                <div class="checkbox-outer">
+                                    <input type="radio" name="payment" value="checkinPayment" checked><label>Thanh toán trực tiếp</label><br />
+                                    <input type="radio" name="payment" value="credit" checked><label>Thanh toán Online</label><br />
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="container ">
+                            <div class="row" style="padding-bottom:50px;">
+                                <div class="row" style="padding-bottom:50px">
+                                    <div>
+                                        <button class="btn-blue btn-red btn-style-1" type="submit" name="thanhtoantructiep">Tiếp tục thanh toán trực tiếp nhấn vào đây</button>
+                                        <button id="btnSubmit" class="btn-blue btn-red btn-style-1" type="submit">Tiếp tục thanh toán Online thì nhấn vào đây</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.getElementById('btnSubmit').addEventListener('click', function () {
+        const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+
+        const form = document.querySelector('form');
+        if (paymentMethod === "credit") {
+            form.action = '/Checkout/ThanhToanOnline';
+        } else {
+            form.action = '/Checkout/CheckoutConfirm';
+        }
+        form.submit();
+    });
+</script>
